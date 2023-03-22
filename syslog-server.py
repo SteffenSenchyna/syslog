@@ -8,11 +8,14 @@ from discord_webhook import DiscordEmbed, DiscordWebhook
 from dotenv import load_dotenv
 from datetime import datetime, timedelta
 from pymongo import MongoClient
+import os
+from dotenv import load_dotenv
 
 
 class SysLogServer(socketserver.BaseRequestHandler):
 
     def handle(self):
+        load_dotenv()
         data = bytes.decode(self.request[0].strip())
         priority = int(data.split('<')[1].split('>')[0])
         severity = priority % 8
@@ -30,7 +33,7 @@ class SysLogServer(socketserver.BaseRequestHandler):
                 "created_at": datetime.utcnow(),
             }
             if severity <= 3:
-                discordURL = "https://discord.com/api/webhooks/1088239694464168088/wNsQL0Pem8UAUrqpNKqfXSJwho4jExIPNGpXQGVn7txCUNpUm0e2uv879L3S3U84Iz8U"
+                discordURL = os.environ["DISCORDURL"]
                 webhook = DiscordWebhook(
                     url=discordURL)
                 embed = DiscordEmbed(
