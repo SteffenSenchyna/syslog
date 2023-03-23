@@ -3,10 +3,9 @@ import logging
 import logging.handlers
 import socket
 import socketserver
-from pprint import pprint
 from discord_webhook import DiscordEmbed, DiscordWebhook
 from dotenv import load_dotenv
-from datetime import datetime, timedelta
+from datetime import datetime
 from pymongo import MongoClient
 import os
 from dotenv import load_dotenv
@@ -22,7 +21,7 @@ class SysLogServer(socketserver.BaseRequestHandler):
         level = logging.getLevelName(50 - severity * 10)
         # Get the client's IP address and port number
         client_ip = self.client_address[0]
-        client_port = self.client_address[1]
+        print(f'{level} ({severity}): {data} from {client_ip}')
 
         try:
             log = {
@@ -46,20 +45,27 @@ class SysLogServer(socketserver.BaseRequestHandler):
                     name='Device', value=client_ip)
                 embed.add_embed_field(
                     name='Message', value=data, inline=False)
-                # add embed object to webhook
                 webhook.add_embed(embed)
                 webhook.execute()
-            client = MongoClient('mongodb://localhost:27017/')
+
+            env = os.environ["ENV"]
+            if env == "local":
+                url = "mongodb://localhost:27017/"
+            else:
+                url = "mongodb://mongodb:27017/"
+
+            client = MongoClient(url)
             logs = client["logs"]
             log_table = logs[client_ip]
             result = log_table.insert_one(log)
             if result.acknowledged != True:
                 print("Could not upload Syslog message to DB")
 
+            print(f"Posted to DB with id {result.inserted_id}")
+
         except Exception as e:
             print(e)
         # Log the incoming syslog message along with the client's IP address and port number
-        print(f'{level} ({severity}): {data} from {client_ip}:{client_port}')
 
 
 logging.basicConfig(level=logging.INFO)
