@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: syslog-deployment
+  labels:
+    app: syslog
+#Grabs template and deploys it
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: syslog
+  #Configuration for pod
+  template:
+    metadata:
+      labels:
+        app: syslog
+    #Which image and what port
+    spec:
+      containers:
+        - name: syslog
+          image: ssenchyna/syslog:1.0
+          ports:
+            - containerPort: 514
+          env:
+            - name: DISCORDURL
+              valueFrom:
+                secretKeyRef:
+                  #References mongo-secret file and grabs value for mongo-user
+                  name: syslog-secret
+                  key: discord-url
+            - name: ENV
+              valueFrom:
+                configMapKeyRef:
+                  #References mongo-secret file and grabs value for mongo-user
+                  name: syslog-config
+                  key: env
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+      
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: syslog-service
+spec:
+  type: NodePort
+  #Matches services to pods
+  selector:
+    app: syslog
+  ports:
+    - protocol: UDP
+      #Service Port
+      port: 514
+      #Pod Port
+      targetPort: 514
+      #External Facing Port
+      nodePort: 30514

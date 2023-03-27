@@ -1,0 +1,9 @@
+version: "3.9"  
+services:
+    syslog:
+      image: syslog:latest
+      environment:
+        DISCORDURL: ${DISCORDURL}
+        ENV: "local"
+      ports:
+        - "514:514/udp" 
