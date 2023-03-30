@@ -1,6 +1,5 @@
 #!/bin/bash
 source .env
-
 # Create the charts directory
 mkdir -p charts
 

@@ -2,3 +2,4 @@ syslog-config.txt
 mongo-cmds.txt
 .env
 syslog-secret.yaml
+charts/
