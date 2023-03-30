@@ -1,5 +1,7 @@
-logging host <Server IP>
-
+logging host 10.0.5.151
+snmp-server community cs1 RO
+snmp-server host 10.0.5.151 cs1
+snmp-server enable traps
 logging facility facility-type
 Specifies the facility level used by the syslog messages; the default is local7.
 Possible values are local0, local1, local2, local3, local4, local5, local6, and local7.

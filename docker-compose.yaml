@@ -6,4 +6,4 @@ services:
         DISCORDURL: ${DISCORDURL}
         ENV: "local"
       ports:
-        - "514:514/udp" 
+        - "514:514/UDP" 

@@ -8,6 +8,6 @@ WORKDIR /app
 # Install the required packages
 RUN pip install -r requirements.txt
 COPY . /app
-EXPOSE 514/udp
+EXPOSE 514/UDP
 
 CMD [ "python", "-u", "syslog-server.py" ]

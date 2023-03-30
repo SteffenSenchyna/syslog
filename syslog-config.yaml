@@ -1,7 +1,0 @@
-#ConfigMaps holds persistent data ENV file for non secret data 
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: syslog-config
-data:
-  env: local

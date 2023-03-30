@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: syslog-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: syslog
+  template:
+    metadata:
+      labels:
+        app: syslog
+    spec:
+      containers:
+        - name: syslog
+          image: ssenchyna/syslog:latest
+          ports:
+            - containerPort: 514
+          envFrom:
+            - configMapRef:
+                name: syslog-configmap
+            - secretRef:
+                name: syslog-secret

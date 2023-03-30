@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: syslog-configmap
+data:
+  DISCORDURL: https://discord.com/api/webhooks/1089050195658018828/gnopErGnsCMXeW4sDXNsRZL5af3h8AdfwsV6UXR4mHWoWTMdVvX5yIYcEjv_18AmRjEk
+  ENV: local
