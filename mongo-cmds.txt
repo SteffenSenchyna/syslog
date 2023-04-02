@@ -1,4 +1,0 @@
-MongoBD
-To login into mongo container shell
-docker exec -it mongodb bash
-mongosh

@@ -14,18 +14,28 @@ from dotenv import load_dotenv
 class SysLogServer(socketserver.BaseRequestHandler):
 
     def handle(self):
+        def severityLevel(argument):
+            severityLabel = {
+                0: "Emergency",
+                1: "Alert",
+                2: "Critical",
+                3: "Error",
+                4: "Warning",
+                5: "Notification",
+                6: "Informational"
+            }
+            return severityLabel.get(argument, "Default case")
         load_dotenv()
         data = bytes.decode(self.request[0].strip())
         priority = int(data.split('<')[1].split('>')[0])
         severity = priority % 8
-        level = logging.getLevelName(50 - severity * 10)
         # Get the client's IP address and port number
         client_ip = self.client_address[0]
-        print(f'{level} ({severity}): {data} from {client_ip}')
+        print(f'{severityLevel(severity)} ({severity}): {data} from {client_ip}')
 
         try:
-            log = {
-                "level": level,
+            syslog_trap = {
+                "level": severityLevel(severity),
                 "severity":  severity,
                 "message": data,
                 "client_ip": client_ip,
@@ -48,20 +58,16 @@ class SysLogServer(socketserver.BaseRequestHandler):
                 webhook.add_embed(embed)
                 webhook.execute()
 
-            env = os.environ["ENV"]
-            if env == "local":
-                url = "mongodb://localhost:27017/"
-            else:
-                url = "mongodb://mongodb:27017/"
-
+            mongoURL = os.environ["MONGOURL"]
+            url = f"mongodb://{mongoURL}/"
             client = MongoClient(url)
-            logs = client["logs"]
+            logs = client["syslogs"]
             log_table = logs[client_ip]
-            result = log_table.insert_one(log)
+            result = log_table.insert_one(syslog_trap)
             if result.acknowledged != True:
                 print("Could not upload Syslog message to DB")
 
-            print(f"Posted to DB with id {result.inserted_id}")
+            print(f"Posted to DB with id {result.inserted_id}\n{syslog_trap}")
 
         except Exception as e:
             print(e)
