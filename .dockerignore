@@ -5,3 +5,6 @@ mongo-cmds.txt
 docker-build.py
 charts/
 docker-compose.yaml
+Jenkinsfile
+helm-chart/
+.vscode

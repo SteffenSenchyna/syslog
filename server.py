@@ -27,6 +27,7 @@ class SysLogServer(socketserver.BaseRequestHandler):
             return severityLabel.get(argument, "Default case")
         load_dotenv()
         data = bytes.decode(self.request[0].strip())
+        print(data)
         priority = int(data.split('<')[1].split('>')[0])
         severity = priority % 8
         # Get the client's IP address and port number
@@ -65,7 +66,7 @@ class SysLogServer(socketserver.BaseRequestHandler):
             log_table = logs[client_ip]
             result = log_table.insert_one(syslog_trap)
             if result.acknowledged != True:
-                print("Could not upload Syslog message to DB")
+                print("Could not upload Syslog trap to DB")
 
             print(f"Posted to DB with id {result.inserted_id}\n{syslog_trap}")
 

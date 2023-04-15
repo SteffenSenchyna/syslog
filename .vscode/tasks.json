@@ -1,0 +1,11 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "ArgoCD: Port-Forward Tunnel",
+            "type": "shell",
+            "command": "kubectl port-forward svc/argocd-server -n argocd 8080:443",
+            "problemMatcher": []
+        }
+    ]
+}

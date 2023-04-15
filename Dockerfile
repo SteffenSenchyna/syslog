@@ -10,4 +10,4 @@ RUN pip install -r requirements.txt
 COPY . /app
 EXPOSE 514/UDP
 
-CMD [ "python", "-u", "syslog-server.py" ]
+CMD [ "python", "-u", "server.py" ]
