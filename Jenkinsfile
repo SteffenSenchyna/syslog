@@ -6,7 +6,7 @@ pipeline {
     BUILD_TAG = "0.1.${currentBuild.number}"
     GIT_COMMIT = sh(returnStdout: true, script: 'git rev-parse HEAD').trim().substring(0, 6)
     USER="ssenchyna"
-    SERVICE="${env.JOB_NAME}"
+    SERVICE = env.JOB_NAME.substring(env.JOB_NAME.lastIndexOf('/') + 1)
     NETBOXTOKEN=""
     NETBOXURL=""
     DISCORDURL=""
