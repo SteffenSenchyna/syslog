@@ -4,7 +4,6 @@ import logging.handlers
 import signal
 import socket
 import socketserver
-import time
 from discord_webhook import DiscordEmbed, DiscordWebhook
 from dotenv import load_dotenv
 from datetime import datetime
@@ -12,7 +11,7 @@ from pymongo import MongoClient
 import os
 from dotenv import load_dotenv
 log = logging.getLogger(__name__)
-logging.basicConfig(level=logging.INFO)
+# logging.basicConfig(level=logging.INFO)
 # console = logging.StreamHandler()
 # log.addHandler(console)
 
