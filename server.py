@@ -1,6 +1,4 @@
 import errno
-import logging
-import logging.handlers
 import signal
 import socket
 import socketserver
@@ -10,10 +8,7 @@ from datetime import datetime
 from pymongo import MongoClient
 import os
 from dotenv import load_dotenv
-log = logging.getLogger(__name__)
-logging.basicConfig(level=logging.INFO)
-# console = logging.StreamHandler()
-# log.addHandler(console)
+
 
 # lsof -i :514
 
@@ -68,7 +63,7 @@ def trapHandler(trap, client_ip):
     priority = int(data.split('<')[1].split('>')[0])
     severity = priority % 8
     # Get the client's IP address and port number
-    log.info(
+    print(
         f'{severityLevel(severity)} ({severity}): {data} from {client_ip}')
     try:
         syslog_trap = {
@@ -88,13 +83,13 @@ def trapHandler(trap, client_ip):
         log_table = logs[client_ip]
         result = log_table.insert_one(syslog_trap)
         if result.acknowledged != True:
-            log.error("Could not upload Syslog trap to MongoDB")
+            print("Could not upload Syslog trap to MongoDB")
 
-        log.info(
+        print(
             f"Successfully posted to MongoDB")
 
     except Exception as e:
-        log.error(str(e))
+        print(str(e))
 
 
 class SysLogHandler(socketserver.BaseRequestHandler):
