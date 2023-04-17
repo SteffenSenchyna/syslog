@@ -3,9 +3,8 @@ FROM python:3.9.2-alpine3.13 AS builder
 
 RUN apk add gcc musl-dev && \
     pip install --upgrade setuptools
-
-WORKDIR /app
 COPY . /app
+WORKDIR /app
 RUN pip wheel --wheel-dir=/wheels -r requirements.txt
 RUN python -m unittest discover -s . -p "*_test.py"
 
