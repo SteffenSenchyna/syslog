@@ -2,7 +2,7 @@
 
 pipeline {
   environment {
-    HELM_TAG = "1.0.0"
+    HELM_TAG = "1.0.1"
     BUILD_TAG = "0.${currentBuild.number}"
     GIT_COMMIT = sh(returnStdout: true, script: 'git rev-parse HEAD').trim().substring(0, 6)
     USER="ssenchyna"
