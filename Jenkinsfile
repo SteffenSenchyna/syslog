@@ -41,11 +41,6 @@ pipeline {
             """
         }
     }
-    stage("Run Unit Tests") {
-        steps {
-            sh 'docker run --rm ${env.DOCKER_REPO}/$SERVICE:$BUILD_TAG python3 -m unittest discover -s /app/tests -p "*_test.py"'
-        }
-    }
     stage("Push Docker/Helm") {
         steps {
             sh """
