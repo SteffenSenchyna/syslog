@@ -7,6 +7,7 @@ RUN apk add gcc musl-dev && \
 WORKDIR /app
 COPY ./requirements.txt /app/requirements.txt
 RUN pip wheel --wheel-dir=/wheels -r requirements.txt
+RUN python -m unittest discover -s . -p "*_test.py"
 
 # Stage 2: production environment
 FROM python:3.9.2-alpine3.13
