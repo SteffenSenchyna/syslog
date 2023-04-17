@@ -1,13 +1,23 @@
-FROM python:3.9.2-alpine3.13
+# Stage 1: build environment
+FROM python:3.9.2-alpine3.13 AS builder
 
 RUN apk add gcc musl-dev && \
     pip install --upgrade setuptools
-COPY ./requirements.txt /app/requirements.txt
-#Moove into the container app folder 
+
 WORKDIR /app
-# Install the required packages
-RUN pip install -r requirements.txt
+COPY ./requirements.txt /app/requirements.txt
+RUN pip wheel --wheel-dir=/wheels -r requirements.txt
+
+# Stage 2: production environment
+FROM python:3.9.2-alpine3.13
+
+WORKDIR /app
+COPY --from=builder /wheels /wheels
+COPY ./requirements.txt /app/requirements.txt
+RUN pip install --no-cache-dir --no-index --find-links=/wheels -r requirements.txt
+
 COPY . /app
+
 EXPOSE 514/UDP
 
 CMD [ "python", "-u", "server.py" ]

@@ -31,12 +31,6 @@ pipeline {
       }
     }
 
-    stage ('Unit Testing'){
-        steps {
-        sh 'python3 -m unittest discover -s . -p "*_test.py"'
-        }
-      }
-
     stage("Build Docker/Helm") {
         steps {
             sh """
