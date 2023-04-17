@@ -35,11 +35,14 @@ securityContext: {}
 # readOnlyRootFilesystem: true
 # runAsNonRoot: true
 # runAsUser: 1000
+config:
+  name: default-config
 
 service:
   type: NodePort
   port: 514
   nodePort: 30514
+  protocol: UDP
 
 ingress:
   enabled: false

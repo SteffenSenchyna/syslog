@@ -1,6 +1,6 @@
 apiVersion: v2
 name: syslog
-description: A Helm chart for deploying a syslog server
+description: A Helm chart for deploying a Syslog server
 
 # A chart can be either an 'application' or a 'library' chart.
 #
