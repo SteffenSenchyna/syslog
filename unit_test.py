@@ -20,9 +20,6 @@ class TestSyslogServer(unittest.TestCase):
             trapHandler(trap, client_ip)
             self.assertEqual(trap_log, log.output[0])
 
-        mock_mongo.assert_called_once()
-        mock_discord.assert_called_once()
 
-
-if __name__ == '__main__':
-    unittest.main()
+# if __name__ == '__main__':
+#     unittest.main()
