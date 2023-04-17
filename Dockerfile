@@ -5,6 +5,7 @@ RUN apk add gcc musl-dev && \
     pip install --upgrade setuptools
 COPY . /app
 WORKDIR /app
+RUN ls
 RUN pip wheel --wheel-dir=/wheels -r requirements.txt
 RUN python -m unittest discover -s . -p "*_test.py"
 
