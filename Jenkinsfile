@@ -20,7 +20,19 @@ pipeline {
 
   agent any
 
-  stages {    
+  stages {   
+    stage('Build For Unit Testing') {
+      steps {
+          sh 'pip install -r requirements.txt'
+        }
+      }
+
+    stage ('Unit Testing'){
+      steps {
+        sh 'python3 -m unittest discover -s . -p "*_test.py"'
+        }
+      }
+ 
     stage("Docker login") {
       steps {
         sh """
