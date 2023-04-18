@@ -1,14 +1,20 @@
 import errno
+import logging
+import logging.handlers
 import signal
 import socket
 import socketserver
+import time
 from discord_webhook import DiscordEmbed, DiscordWebhook
 from dotenv import load_dotenv
 from datetime import datetime
 from pymongo import MongoClient
 import os
 from dotenv import load_dotenv
-
+log = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
+# console = logging.StreamHandler()
+# log.addHandler(console)
 
 # lsof -i :514
 
@@ -44,7 +50,7 @@ def discordAlert(data, client_ip, severity):
         webhook.add_embed(embed)
         webhook.execute()
     except Exception as e:
-        print(str(e))
+        log.error(str(e))
 
 
 def trapHandler(trap, client_ip):
@@ -63,7 +69,7 @@ def trapHandler(trap, client_ip):
     priority = int(data.split('<')[1].split('>')[0])
     severity = priority % 8
     # Get the client's IP address and port number
-    print(
+    log.info(
         f'{severityLevel(severity)} ({severity}): {data} from {client_ip}')
     try:
         syslog_trap = {
@@ -83,13 +89,13 @@ def trapHandler(trap, client_ip):
         log_table = logs[client_ip]
         result = log_table.insert_one(syslog_trap)
         if result.acknowledged != True:
-            print("Could not upload Syslog trap to MongoDB")
+            log.error("Could not upload Syslog trap to MongoDB")
 
-        print(
+        log.info(
             f"Successfully posted to MongoDB")
 
     except Exception as e:
-        print(str(e))
+        log.error(str(e))
 
 
 class SysLogHandler(socketserver.BaseRequestHandler):
