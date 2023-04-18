@@ -44,7 +44,7 @@ def discordAlert(data, client_ip, severity):
         webhook.add_embed(embed)
         webhook.execute()
     except Exception as e:
-        log.error(str(e))
+        print(str(e))
 
 
 def trapHandler(trap, client_ip):
