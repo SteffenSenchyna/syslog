@@ -63,7 +63,7 @@ pipeline {
                   cd cluster-chart
                   yq eval \'.[env(SERVICE)].image.tag = env(BUILD_TAG)\' ./dev/values.yaml -i
                   git add .
-                  git commit -m "Docker-Image:${BUILD_TAG} Chart:${CHART_VER}"
+                  git commit -m "${SERVICE}:${BUILD_TAG} Chart:${CHART_VER}"
                   git push -u origin main
                   """
               } 
@@ -73,7 +73,7 @@ pipeline {
                   cd cluster-chart
                   yq eval \'.[env(SERVICE)].image.tag = env(BUILD_TAG)\' ./dev/values.yaml -i
                   git add .
-                  git commit -m "Docker-Image:${BUILD_TAG}"
+                  git commit -m "${SERVICE}:${BUILD_TAG}"
                   git push -u origin main
                   """
           }
