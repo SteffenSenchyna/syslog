@@ -10,9 +10,15 @@ This Python script implements a simple Syslog server that listens to incoming Sy
 To run this application, follow these steps:
 
 * Clone this repository
-* Install the required packages using pip install -r requirements.txt
-* Run the application using python server.py
+* Install the required packages using `pip install -r requirements.txt`
+* Run the application using `python server.py`
 * The application will listen on port 514 for syslog messages
+
+## Usage
+Send a Syslog message to the server by running the following command in a separate terminal window:
+```
+echo "<13>Feb  5 17:32:18 mymachine myproc[10]: %% It's time to make the do-nuts." | nc -w 1 -u localhost 514
+```
 
 ## Signal Handling
 The server is designed to handle SIGTERM signals. When the server receives a SIGTERM signal, it will shut down gracefully.
@@ -25,6 +31,6 @@ If the severity level of an incoming message is critical (severity <= 3), an ale
 
 ## Environmental Variables
 ```
-MONGOURL=mongodb://localhost:27017/
+MONGOURL=<MongoDB URL>
 DISCORDURL=https://discord.com/api/webhooks/<your_webhook_url>
 ```
