@@ -24,8 +24,16 @@ echo "<13>Feb  5 17:32:18 mymachine myproc[10]: %% It's time to make the do-nuts
 The server is designed to handle SIGTERM signals. When the server receives a SIGTERM signal, it will shut down gracefully.
 
 ## MongoDB Storage
-Each incoming syslog message is stored in its own collection within the syslogs database, with the name of the collection being the IP address of the client that sent the message.
-
+Each incoming syslog message is stored in its own collection within the syslogs database, with the following format:
+```
+{
+  "level": <severity_level>,
+  "severity":  <trap_severity>,
+  "message": <trap_message>,
+  "client_ip": <client_ip>,
+  "created_at": datetime.utcnow(),
+}
+```
 ## Discord Alerting
 If the severity level of an incoming message is critical (severity <= 3), an alert will be sent to the Discord channel specified in the DISCORDURL environment variable. The alert will include the device IP address, severity level, and the message.
 
