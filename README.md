@@ -1,5 +1,5 @@
 # Syslog Server
-This Python script implements a simple Syslog server that listens to incoming Syslog messages on port 514 and logs them to a MongoDB database. In addition, the script sends a notification to a Discord channel for Syslog messages with a severity level of 0-3 (Emergency, Alert, Critical, and Error).
+This Python script implements a simple Syslog server that listens to incoming Syslog messages on port 514 and logs them to a MongoDB database. In addition, the script sends a notification to a Discord channel for Syslog messages with a severity level of 0-3 (Emergency, Alert, Critical, and Error). This server is part of a larger project, which includes several microservices and other components that collectively provide tools to manage on-premise networking devices. The view the cluster architecture and the CI/CD pipeline for deployment, refer to the [Cluster Manifest Repository](https://github.com/SteffenSenchyna/cluster-chart).
 
 ## Prerequisites
 * Python 3.7 or later
