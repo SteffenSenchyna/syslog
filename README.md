@@ -30,6 +30,7 @@ Each incoming syslog message is stored in its own collection within the syslogs 
 If the severity level of an incoming message is critical (severity <= 3), an alert will be sent to the Discord channel specified in the DISCORDURL environment variable. The alert will include the device IP address, severity level, and the message.
 
 ## Environmental Variables
+Create a .env file in the root directory of the project and set the following environment variables:
 ```
 MONGOURL=<MongoDB URL>
 DISCORDURL=https://discord.com/api/webhooks/<your_webhook_url>
