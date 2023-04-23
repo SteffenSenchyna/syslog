@@ -26,7 +26,7 @@ The server is designed to handle SIGTERM signals. When the server receives a SIG
 ## MongoDB Storage
 Each incoming syslog message is stored in its own collection within the syslogs database, with the name of the collection being the IP address of the client that sent the message.
 
-Discord Alerting
+## Discord Alerting
 If the severity level of an incoming message is critical (severity <= 3), an alert will be sent to the Discord channel specified in the DISCORDURL environment variable. The alert will include the device IP address, severity level, and the message.
 
 ## Environmental Variables
