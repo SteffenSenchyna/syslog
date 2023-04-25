@@ -41,5 +41,5 @@ If the severity level of an incoming message is critical (severity <= 3), an ale
 Create a .env file in the root directory of the project and set the following environment variables:
 ```
 MONGOURL=<MongoDB URL>
-DISCORDURL=https://discord.com/api/webhooks/<your_webhook_url>
+DISCORDURL=https://discord.com/api/webhooks/<Webhook URL>
 ```
